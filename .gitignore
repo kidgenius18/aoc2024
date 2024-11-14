@@ -56,3 +56,10 @@ dist/
 # Ignore temporary files from editors like VSCode
 .vscode/
 .idea/
+
+# Recursively ignore all files named "input.txt" (whatever you named it)
+**/input.in
+**/.DS_Store
+
+# Recursively ignore all files matching ".txt"
+**/*.txt
