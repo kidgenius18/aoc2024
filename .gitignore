@@ -63,3 +63,5 @@ dist/
 
 # Recursively ignore all files matching ".txt"
 **/*.txt
+
+secret.py
