@@ -35,7 +35,40 @@ def check_level_2(levels, recr):
     if recr > 1:
         return 0
     
-    
+    total_levels = len(levels)
+    numr = int(levels[0]) - int(levels[1])
+    denom = abs(numr)
+    if denom == 0:
+        new_levels = levels[1:].copy()
+        safe = check_level_2(new_levels, recr + 1)
+        if safe == 0:
+            return 0
+        else:
+            return 1
+    sign_bit = int(numr/denom)
+
+    i = 1
+    while i < total_levels:
+        prev_level = int(levels[i-1])
+        level = int(levels[i])
+        diff = prev_level - level
+        if diff not in range(sign_bit * 1, sign_bit * 4, sign_bit):
+            new_levels = levels[:].copy()
+            new_levels.pop(i)
+            safe = check_level_2(new_levels, recr + 1)
+            if safe == 0:
+                if recr == 0:
+                    new_levels = levels[:].copy()
+                    new_levels.pop(0)
+                    safe = check_level_2(new_levels, recr + 1)
+                    if safe == 0:
+                        return 0
+                    else:
+                        return 1
+                return 0
+            else:
+                return 1
+        i+=1
     
     return 1
 
@@ -52,7 +85,7 @@ def p2(v):
 
     ans = 0
     for ln in lns:
-        ans += check_level_2(ln.split())
+        ans += check_level_2(ln.split(),0)
     return ans
 
 
@@ -61,9 +94,9 @@ if __name__ == '__main__':
     
     cmds = [
         #'print_stats',
-        'run1',
+        #'run1',
         #'submit1',
-        #'run2',
+        'run2',
         #'submit2',
         #'run_samples',
         #'samples_only'
