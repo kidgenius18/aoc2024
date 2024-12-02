@@ -10,21 +10,55 @@ from utils import *
 def get_day(): return 2
 def get_year(): return 2024
 
+def check_level(levels):
+    total_levels = len(levels)
+
+    numr = int(levels[0]) - int(levels[1])
+    denom = abs(numr)
+    if denom == 0:
+        return 0
+    sign_bit = int(numr/denom)
+
+    i = 1
+    while i < total_levels:
+        prev_level = int(levels[i-1])
+        level = int(levels[i])
+        diff = prev_level - level
+        if diff not in range(sign_bit * 1, sign_bit * 4, sign_bit):
+            return 0
+        
+        i+=1
+    
+    return 1
+         
+def check_level_2(levels, recr):
+    if recr > 1:
+        return 0
+    
+    
+    
+    return 1
+
 def p1(v):
     lns = get_lines(v)
-    chunks = v.split('\n\n')
+
     ans = 0
     for ln in lns:
-        ans += 1
+        ans += check_level(ln.split())
     return ans
 
 def p2(v):
-    return p1(v)
+    lns = get_lines(v)
+
+    ans = 0
+    for ln in lns:
+        ans += check_level_2(ln.split())
+    return ans
 
 
 if __name__ == '__main__':
     cmds = get_commands()
-    """
+    
     cmds = [
         #'print_stats',
         'run1',
@@ -34,6 +68,6 @@ if __name__ == '__main__':
         #'run_samples',
         #'samples_only'
         ]
-    """
+
     print('Commands:', cmds)
     main(get_year(), get_day(), p1, p2, cmds, FILE=__file__)
