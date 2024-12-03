@@ -11,10 +11,16 @@ def get_day(): return 2
 def get_year(): return 2024
 
 def check_report(levels):
+    #generate a list of all differences between each level
     diff_matrix = [int(a) - int(b) for a, b in zip(levels, levels[1:])]
+    
     if diff_matrix[0] != 0: #this will protect against div0 errors and is an invalid combination anyways, so we can immediately exit
+        #get the sign of the first difference
         sign = diff_matrix[0] // abs(diff_matrix[0])
+
+        #check if all differences are within the range of 1-3, but with same sign as the first difference
         result = all(item in range(sign * 1, sign * 4, sign) for item in diff_matrix)
+
         if result:
             return 1  # Valid combination found
     return 0
@@ -37,6 +43,7 @@ def p2(v):
 
     for ln in lns:
         report = ln.split()
+        #create a list of reports with each version missing a single item from the original report
         level_combos = [report[:i] + report[i + 1:] for i in range(len(report))]
         level_combos.insert(0, report)  # Include the original levels
 

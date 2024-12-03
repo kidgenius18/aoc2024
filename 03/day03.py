@@ -14,13 +14,13 @@ def get_year(): return 2024
 def p1(v):
     t0 = time.time()
 
-    lns = get_lines(v)
+    chunks = v.split('\n\n')
     pattern = r"mul\((\d+),(\d+)\)"
     ans = 0
-    for ln in lns:
-        matches = re.findall(pattern, ln)
-        for match in matches:
-            ans+= int(match[0]) * int(match[1])
+    
+    matches = re.findall(pattern, chunks[0])
+    for match in matches:
+        ans+= int(match[0]) * int(match[1])
 
     print(f'Time: {time.time() - t0}')
     return ans
@@ -28,21 +28,20 @@ def p1(v):
 def p2(v):
     t0 = time.time()
 
-    lns = get_lines(v)
+    chunks = v.split('\n\n')
     pattern = r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)"
 
     ans = 0
-    do = True #this is tricky because the file has multiple lines, but the instruction set carries over between lines
+    do = True 
 
-    for ln in lns:
-        for match in re.finditer(pattern, ln):
-            if match.group(0) == "do()":
-                do = True
-            elif match.group(0) == "don't()":
-                do = False
-            elif match.group(1) and match.group(2):
-                if do:
-                    ans += int(match.group(1)) * int(match.group(2))
+    for match in re.finditer(pattern, chunks[0]):
+        if match.group(0) == "do()":
+            do = True
+        elif match.group(0) == "don't()":
+            do = False
+        elif match.group(1) and match.group(2):
+            if do:
+                ans += int(match.group(1)) * int(match.group(2))
 
     print(f'Time: {time.time() - t0}')
     return ans

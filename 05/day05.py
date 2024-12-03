@@ -11,14 +11,20 @@ def get_day(): return 5
 def get_year(): return 2024
 
 def p1(v):
+    t0 = time.time()
     lns = get_lines(v)
     chunks = v.split('\n\n')
     ans = 0
     for ln in lns:
         ans += 1
+    
+    print(f'Time: {time.time() - t0}')
     return ans
 
 def p2(v):
+    t0 = time.time()
+
+    print(f'Time: {time.time() - t0}')
     return p1(v)
 
 
