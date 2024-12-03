@@ -10,82 +10,43 @@ from utils import *
 def get_day(): return 2
 def get_year(): return 2024
 
-def check_level(levels):
-    total_levels = len(levels)
-
-    numr = int(levels[0]) - int(levels[1])
-    denom = abs(numr)
-    if denom == 0:
-        return 0
-    sign_bit = int(numr/denom)
-
-    i = 1
-    while i < total_levels:
-        prev_level = int(levels[i-1])
-        level = int(levels[i])
-        diff = prev_level - level
-        if diff not in range(sign_bit * 1, sign_bit * 4, sign_bit):
-            return 0
-        
-        i+=1
-    
-    return 1
-         
-def check_level_2(levels, recr):
-    if recr > 1:
-        return 0
-    
-    total_levels = len(levels)
-    numr = int(levels[0]) - int(levels[1])
-    denom = abs(numr)
-    if denom == 0:
-        new_levels = levels[1:].copy()
-        safe = check_level_2(new_levels, recr + 1)
-        if safe == 0:
-            return 0
-        else:
-            return 1
-    sign_bit = int(numr/denom)
-
-    i = 1
-    while i < total_levels:
-        prev_level = int(levels[i-1])
-        level = int(levels[i])
-        diff = prev_level - level
-        if diff not in range(sign_bit * 1, sign_bit * 4, sign_bit):
-            new_levels = levels[:].copy()
-            new_levels.pop(i)
-            safe = check_level_2(new_levels, recr + 1)
-            if safe == 0:
-                if recr == 0:
-                    new_levels = levels[:].copy()
-                    new_levels.pop(0)
-                    safe = check_level_2(new_levels, recr + 1)
-                    if safe == 0:
-                        return 0
-                    else:
-                        return 1
-                return 0
-            else:
-                return 1
-        i+=1
-    
-    return 1
+def check_report(levels):
+    diff_matrix = [int(a) - int(b) for a, b in zip(levels, levels[1:])]
+    if diff_matrix[0] != 0: #this will protect against div0 errors and is an invalid combination anyways, so we can immediately exit
+        sign = diff_matrix[0] // abs(diff_matrix[0])
+        result = all(item in range(sign * 1, sign * 4, sign) for item in diff_matrix)
+        if result:
+            return 1  # Valid combination found
+    return 0
 
 def p1(v):
+    t0 = time.time()
     lns = get_lines(v)
-
     ans = 0
+
     for ln in lns:
-        ans += check_level(ln.split())
+        ans += check_report(ln.split())
+
+    print(f'Time: {time.time() - t0}')
     return ans
 
 def p2(v):
+    t0 = time.time()
     lns = get_lines(v)
-
     ans = 0
+
     for ln in lns:
-        ans += check_level_2(ln.split(),0)
+        report = ln.split()
+        level_combos = [report[:i] + report[i + 1:] for i in range(len(report))]
+        level_combos.insert(0, report)  # Include the original levels
+
+        for combo in level_combos:
+            result = check_report(combo)
+            if result:
+                ans += 1
+                break
+
+    print(f'Time: {time.time() - t0}')
     return ans
 
 
@@ -94,7 +55,7 @@ if __name__ == '__main__':
     
     cmds = [
         #'print_stats',
-        #'run1',
+        'run1',
         #'submit1',
         'run2',
         #'submit2',

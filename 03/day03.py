@@ -12,6 +12,8 @@ def get_day(): return 3
 def get_year(): return 2024
 
 def p1(v):
+    t0 = time.time()
+
     lns = get_lines(v)
     pattern = r"mul\((\d+),(\d+)\)"
     ans = 0
@@ -19,9 +21,13 @@ def p1(v):
         matches = re.findall(pattern, ln)
         for match in matches:
             ans+= int(match[0]) * int(match[1])
+
+    print(f'Time: {time.time() - t0}')
     return ans
 
 def p2(v):
+    t0 = time.time()
+
     lns = get_lines(v)
     pattern = r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)"
 
@@ -37,6 +43,8 @@ def p2(v):
             elif match.group(1) and match.group(2):
                 if do:
                     ans += int(match.group(1)) * int(match.group(2))
+
+    print(f'Time: {time.time() - t0}')
     return ans
 
 if __name__ == '__main__':
