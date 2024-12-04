@@ -1,0 +1,35 @@
+MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX
+
+
+if puzzle.get((key[0], key[1] + step)) == step_map[step]:
+    case_tracker[0] += 1
+if puzzle.get((key[0], key[1] - step)) == step_map[step]:
+    case_tracker[1] += 1
+if puzzle.get((key[0] + step, key[1])) == step_map[step]:
+    case_tracker[2] += 1
+if puzzle.get((key[0] - step, key[1])) == step_map[step]:
+    case_tracker[3] += 1
+if puzzle.get((key[0] + step, key[1] + step)) == step_map[step]:
+    case_tracker[4] += 1
+if puzzle.get((key[0] - step, key[1] + step)) == step_map[step]:
+    case_tracker[5] += 1
+if puzzle.get((key[0] + step, key[1] - step)) == step_map[step]:
+    case_tracker[6] += 1
+if puzzle.get((key[0] - step, key[1] - step)) == step_map[step]:
+    case_tracker[7] += 1
+
+
+
+
+
+
+
