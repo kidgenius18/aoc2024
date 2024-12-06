@@ -1,5 +1,5 @@
 import re
-
+from collections import *
 # String parsing
 
 def exact_match(pattern, s):
@@ -26,6 +26,16 @@ def multi_split(s, schars):
             curr += c
     if curr: out.append(curr)
     return out
+
+def get_map(data, symbol):
+    #takes data that is in 'lines'
+    symbol_dict = defaultdict(list)
+    for j, chars in enumerate(data):
+        for i, char in enumerate(chars):
+            if char == symbol:
+                symbol_dict[(i,j)] = []
+    return symbol_dict
+
 
 def lazy_ints(arr):
     out = []
