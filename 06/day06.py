@@ -60,9 +60,8 @@ def p2(v):
 
 
             #what we need to do....
-            #put down a obstruction in front of us, then look in the direction until we hit the next obstruction, 
-            #if we've seen that obstruction before (from the same step we we are before), we would be in a loop
-            #if there was now an obstruction in front of me, would placing it cause the spot to the right to increase by 1?
+            #put down a obstruction in front of us, then look in the direction until we hit the next obstruction, continue doing this until everythying ends.  if we hit
+            # any visited point heading the same direction as a previously visited point, then we're in a loop.
             sub_dir_tracker = (dir_tracker + 1) % len(dir_map)
             sub_dx, sub_dy = dir_map[sub_dir_tracker][1]
             possible_revisit = visited.get((x + sub_dx, y + sub_dy))
